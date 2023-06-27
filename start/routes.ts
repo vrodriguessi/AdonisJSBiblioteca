@@ -26,4 +26,6 @@ Route.group(() =>{
   })
 
   Route.resource("/livros", "LivrosController").apiOnly()
+  Route.resource("/bibliotecas", "BibliotecasController").apiOnly()
+
 }).prefix('/api')

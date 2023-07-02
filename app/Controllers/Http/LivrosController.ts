@@ -45,4 +45,13 @@ export default class LivrosController {
             data: livro,
         }
     }
+
+    public async show({params}: HttpContextContract){
+
+        const livro = await Livro.findOrFail(params.id)
+
+        return{
+            data: livro,
+        }
+    }
 }

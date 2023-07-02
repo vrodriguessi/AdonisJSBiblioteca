@@ -25,4 +25,13 @@ export default class BibliotecasController {
         }
     }
 
+    public async show({params}: HttpContextContract){
+
+        const biblioteca = await Biblioteca.findOrFail(params.id)
+
+        return{
+            data: biblioteca,
+        }
+    }
+
 }

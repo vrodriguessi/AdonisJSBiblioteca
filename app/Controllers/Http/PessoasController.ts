@@ -45,4 +45,13 @@ export default class PessoasController {
             data: pessoa,
         }
     }
+
+    public async show({params}: HttpContextContract){
+
+        const pessoa = await Pessoa.findOrFail(params.id)
+
+        return{
+            data: pessoa,
+        }
+    }
 }

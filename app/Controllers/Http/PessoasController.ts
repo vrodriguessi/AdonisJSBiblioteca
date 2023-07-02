@@ -37,4 +37,12 @@ export default class PessoasController {
             data: pessoa,
         }
     }
+
+    public async index(){
+        const pessoa = await Pessoa.all()
+
+        return{
+            data: pessoa,
+        }
+    }
 }

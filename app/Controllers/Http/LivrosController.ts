@@ -37,4 +37,12 @@ export default class LivrosController {
             data: livro,
         }
     }
+
+    public async index(){
+        const livro = await Livro.all()
+
+        return{
+            data: livro,
+        }
+    }
 }

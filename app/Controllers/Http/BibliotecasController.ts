@@ -17,4 +17,12 @@ export default class BibliotecasController {
         }
     }
 
+    public async index(){
+        const biblioteca = await Biblioteca.all()
+
+        return{
+            data: biblioteca,
+        }
+    }
+
 }

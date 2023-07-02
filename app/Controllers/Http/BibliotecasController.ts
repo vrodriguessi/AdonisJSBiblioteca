@@ -34,4 +34,16 @@ export default class BibliotecasController {
         }
     }
 
+    public async destroy({params}: HttpContextContract){
+
+        const biblioteca = await Biblioteca.findOrFail(params.id)
+
+        await biblioteca.delete()
+
+        return{
+            messege: "Deletado com sucesso",
+            data: biblioteca,
+        }
+    }
+
 }

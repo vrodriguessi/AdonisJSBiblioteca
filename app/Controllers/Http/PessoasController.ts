@@ -54,4 +54,16 @@ export default class PessoasController {
             data: pessoa,
         }
     }
+
+    public async destroy({params}: HttpContextContract){
+
+        const pessoa = await Pessoa.findOrFail(params.id)
+
+        await pessoa.delete()
+
+        return{
+            messege: "Deletado com sucesso",
+            data: pessoa,
+        }
+    }
 }

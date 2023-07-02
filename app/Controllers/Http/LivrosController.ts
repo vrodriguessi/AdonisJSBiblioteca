@@ -54,4 +54,16 @@ export default class LivrosController {
             data: livro,
         }
     }
+
+    public async destroy({params}: HttpContextContract){
+
+        const livro = await Livro.findOrFail(params.id)
+
+        await livro.delete()
+
+        return{
+            messege: "Deletado com sucesso",
+            data: livro,
+        }
+    }
 }

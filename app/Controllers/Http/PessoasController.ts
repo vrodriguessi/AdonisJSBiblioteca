@@ -66,4 +66,32 @@ export default class PessoasController {
             data: pessoa,
         }
     }
+    public async update({params, request}: HttpContextContract){
+
+        const body = request.body()
+
+        const pessoa = await Pessoa.findOrFail(params.id)
+
+        pessoa.title = body.title
+        pessoa.description = body.description
+
+        if(pessoa.image != body.image || !pessoa.image){
+            const image = request.file('image', this.validationOptions)
+
+            if(image){
+                const imageName = `${uuidv4()}.${image.extname}`
+    
+                await image.move(Application.tmpPath('uploads'), {
+                    name: imageName,
+                })
+    
+                pessoa.image = imageName
+            }
+        }
+        await pessoa.save()
+        return{
+            messege: "Atualizado com sucesso!",
+            data: pessoa,
+        }
+    }
 }

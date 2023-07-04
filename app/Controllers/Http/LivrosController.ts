@@ -66,4 +66,32 @@ export default class LivrosController {
             data: livro,
         }
     }
+    public async update({params, request}: HttpContextContract){
+
+        const body = request.body()
+
+        const livro = await Livro.findOrFail(params.id)
+
+        livro.title = body.title
+        livro.description = body.description
+
+        if(livro.image != body.image || !livro.image){
+            const image = request.file('image', this.validationOptions)
+
+            if(image){
+                const imageName = `${uuidv4()}.${image.extname}`
+    
+                await image.move(Application.tmpPath('uploads'), {
+                    name: imageName,
+                })
+    
+                livro.image = imageName
+            }
+        }
+        await livro.save()
+        return{
+            messege: "Atualizado com sucesso!",
+            data: livro,
+        }
+    }
 }

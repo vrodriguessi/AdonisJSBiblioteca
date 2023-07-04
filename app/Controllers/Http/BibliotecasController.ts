@@ -16,7 +16,6 @@ export default class BibliotecasController {
             data: biblioteca,
         }
     }
-
     public async index(){
         const biblioteca = await Biblioteca.all()
 
@@ -24,7 +23,6 @@ export default class BibliotecasController {
             data: biblioteca,
         }
     }
-
     public async show({params}: HttpContextContract){
 
         const biblioteca = await Biblioteca.findOrFail(params.id)
@@ -33,7 +31,6 @@ export default class BibliotecasController {
             data: biblioteca,
         }
     }
-
     public async destroy({params}: HttpContextContract){
 
         const biblioteca = await Biblioteca.findOrFail(params.id)
@@ -45,5 +42,20 @@ export default class BibliotecasController {
             data: biblioteca,
         }
     }
+    public async update({params, request}: HttpContextContract){
 
+        const body = request.body()
+
+        const biblioteca = await Biblioteca.findOrFail(params.id)
+
+        biblioteca.title = body.title
+        biblioteca.description = body.description
+
+        await biblioteca.save()
+        return{
+            messege: "Atualizado com sucesso!",
+            data: biblioteca,
+        }
+    }
+    
 }

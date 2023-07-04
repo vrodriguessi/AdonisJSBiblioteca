@@ -9,6 +9,9 @@ export default class extends BaseSchema {
       table.string('title')
       table.string('description')
       table.string('image')
+
+      table.integer("pessoa_id").unsigned().references("pessoas.id").onDelete('CASCADE')
+      
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

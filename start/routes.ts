@@ -30,3 +30,9 @@ Route.group(() =>{
   Route.resource("/pessoas", "PessoasController").apiOnly()
 
 }).prefix('/api')
+
+Route.group(() => {
+  Route.post('/pessoas/:pessoaId/emprestimos', 'EmprestimoLivrosController.store')
+
+  Route.delete('/emprestimos/:id', 'EmprestimoLivrosController.update')
+}).prefix('api/v1')

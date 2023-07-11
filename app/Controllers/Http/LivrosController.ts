@@ -66,6 +66,7 @@ export default class LivrosController {
             data: livro,
         }
     }
+    
     public async update({params, request}: HttpContextContract){
 
         const body = request.body()

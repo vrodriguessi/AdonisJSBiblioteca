@@ -9,8 +9,7 @@ export default class extends BaseSchema {
       table.string('title')
       table.string('description')
       table.string('image')
-      table.integer('available_Copies')
-      
+      table.integer('available_copies')
       table.integer("pessoa_id").unsigned().references("pessoas.id").onDelete('CASCADE')
 
       /**

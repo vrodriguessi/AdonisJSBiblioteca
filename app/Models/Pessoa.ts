@@ -1,10 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
-import Livro from './Livro'
+import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import Livro from 'App/Models/Livro'
 
 export default class Pessoa extends BaseModel {
   @hasMany(()=> Livro)
-  public livros: HasMany<typeof Livro>
+  public livroID: HasMany<typeof Livro>
 
   @column({ isPrimary: true })
   public id: number

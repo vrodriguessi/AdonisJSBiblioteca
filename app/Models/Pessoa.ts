@@ -18,6 +18,9 @@ export default class Pessoa extends BaseModel {
   @column()
   public image: string
 
+  @column()
+  public book_id: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

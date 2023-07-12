@@ -1,9 +1,6 @@
 import { v4 as uuidv4} from 'uuid'
-
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import Pessoa from 'App/Models/Pessoa'
-
 import  Application  from "@ioc:Adonis/Core/Application"
 
 export default class PessoasController {
@@ -11,7 +8,6 @@ export default class PessoasController {
         type: ['image'],
         size: '2mb',
     }
-
     public async store({request, response}:HttpContextContract){
         
         const body = request.body()
@@ -28,16 +24,13 @@ export default class PessoasController {
             body.image = imageName
 
         }
-
         const pessoa = await Pessoa.create(body)
-
         response.status(201)
         return {
             message: "Usuário cadastrado com sucesso!",
             data: pessoa,
         }
     }
-
     public async index(){
         const pessoa = await Pessoa.all()
 
@@ -45,7 +38,6 @@ export default class PessoasController {
             data: pessoa,
         }
     }
-
     public async show({params}: HttpContextContract){
 
         const pessoa = await Pessoa.findOrFail(params.id)
@@ -54,7 +46,6 @@ export default class PessoasController {
             data: pessoa,
         }
     }
-
     public async destroy({params}: HttpContextContract){
 
         const pessoa = await Pessoa.findOrFail(params.id)

@@ -34,5 +34,5 @@ Route.group(() =>{
 Route.group(() => {
   Route.post('/pessoas/:pessoaId/emprestimos', 'EmprestimoLivrosController.store')
 
-  Route.delete('/emprestimos/:id', 'EmprestimoLivrosController.update')
+  Route.patch('/pessoas/:pessoaId/livros/:livroId/emprestimos', 'EmprestimoLivrosController.update')
 }).prefix('api/v1')

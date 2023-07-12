@@ -1,7 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
-import Pessoa from './Pessoa'
-
+import { BaseModel, column} from '@ioc:Adonis/Lucid/Orm'
 
 export default class Livro extends BaseModel {
   @column({ isPrimary: true })
@@ -19,8 +17,8 @@ export default class Livro extends BaseModel {
   @column()
   public available_copies: number
 
-  @hasMany(() => Pessoa)
-  public pessoaID: HasMany<typeof Pessoa>
+  @column()
+  public library_id: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

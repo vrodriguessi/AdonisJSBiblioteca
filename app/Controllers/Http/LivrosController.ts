@@ -1,8 +1,7 @@
 import { v4 as uuidv4} from 'uuid'
-
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
 import Livro from 'App/Models/Livro'
+import Biblioteca from 'App/Models/Biblioteca'
 
 import  Application  from "@ioc:Adonis/Core/Application"
 
@@ -15,6 +14,16 @@ export default class LivrosController {
     public async store({request, response}:HttpContextContract){
         
         const body = request.body()
+        const copies = body.available_copies
+        if(copies<=0){
+            return {messege: 'Número de cópias inválido, insira ao menos um livro.'}
+        }
+        const library = await Biblioteca.find(body.library_id)
+        if(!library){
+            return{
+                messege:'Biblioteca não cadastrada.'
+            }
+        }
 
         const image = request.file('image', this.validationOptions)
 

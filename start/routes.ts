@@ -27,12 +27,12 @@ Route.group(() =>{
 
   Route.resource("/livros", "LivrosController").apiOnly()
   Route.resource("/bibliotecas", "BibliotecasController").apiOnly()
+  Route.get('/bibliotecas/:id/livros', 'BibliotecasController.showLivros')
   Route.resource("/pessoas", "PessoasController").apiOnly()
 
 }).prefix('/api')
 
 Route.group(() => {
   Route.post('/pessoas/:pessoaId/emprestimos', 'EmprestimoLivrosController.store')
-
   Route.patch('/pessoas/:pessoa_id/livros/:livro_id/emprestimos', 'EmprestimoLivrosController.update')
 }).prefix('api/v1')

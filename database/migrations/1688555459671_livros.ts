@@ -10,11 +10,11 @@ export default class extends BaseSchema {
       table.string('description')
       table.string('image')
       table.integer('available_copies')
-      table.integer('library_id')
-
-      /**
-       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
-       */
+        table
+          .integer('library_id')
+          .unsigned()
+          .references('bibliotecas.id')
+          .onDelete('CASCADE')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

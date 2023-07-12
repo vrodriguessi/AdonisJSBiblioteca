@@ -6,10 +6,10 @@ import EmprestimoLivro from 'App/Models/EmprestimoLivro'
 export default class EmprestimoLivrosController {
   public async store({ request, response }: HttpContextContract) {
   try {
-    const { livroId, pessoaId } = request.body()
+    const { livro_id, pessoa_id } = request.body()
 
-    const livro = await Livro.find(livroId)
-    const pessoa = await Pessoa.find(pessoaId)
+    const livro = await Livro.find(livro_id)
+    const pessoa = await Pessoa.find(pessoa_id)
     if(!livro){
       return response.badRequest('Livro não cadastrado.')
     }
@@ -20,12 +20,12 @@ export default class EmprestimoLivrosController {
       return response.badRequest('O livro não está disponível para empréstimo.')
     }
 
-    pessoa.book_id = livroId
+    pessoa.book_id = livro_id
     await pessoa.save()
 
     const emprestimoLivro = new EmprestimoLivro()
-    emprestimoLivro.livroId = livroId
-    emprestimoLivro.pessoaId = pessoaId
+    emprestimoLivro.livro_id = livro_id
+    emprestimoLivro.pessoa_id = pessoa_id
 
     await emprestimoLivro.save()
 
@@ -35,32 +35,31 @@ export default class EmprestimoLivrosController {
 
     return response.created(emprestimoLivro)
   } catch (error) {
-    console.log(error.message)
     return response.internalServerError('Erro ao criar o empréstimo de livro.')
   }
 }
 
   public async update({ params, response }: HttpContextContract) {
     try {
-      const { livroId, pessoaId } = params
+      const { livro_id, pessoa_id } = params
 
-      const emprestimoLivro = await EmprestimoLivro.find(livroId)
-      if(!emprestimoLivro){
-        console.log(emprestimoLivro)
+      const emprestimoDoLivro = await EmprestimoLivro.query().where('livro_id', livro_id).first()
+      if(!emprestimoDoLivro){
         return response.badRequest('O livro não encontra-se emprestado')
       }
-      const emprestimoPessoa = await EmprestimoLivro.find(pessoaId)
+      const emprestimoPessoa = await EmprestimoLivro.find(pessoa_id)
       if(!emprestimoPessoa){
         return response.badRequest('Usuário não possui emprestimos de livros.')
       }
 
-      const livro = await Livro.findOrFail(emprestimoLivro.livroId)
+      const livro = await Livro.findOrFail(emprestimoDoLivro.livro_id)
 
       livro.available_copies += 1
       await livro.save()
 
       return response.noContent()
     } catch (error) {
+      console.log(error.message)
       return response.internalServerError('Erro ao retornar o livro.')
     }
   }

@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string('title')
       table.string('description')
       table.string('image')
+      table.integer('book_id')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

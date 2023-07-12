@@ -59,7 +59,6 @@ export default class EmprestimoLivrosController {
 
       return response.noContent()
     } catch (error) {
-      console.log(error.message)
       return response.internalServerError('Erro ao retornar o livro.')
     }
   }

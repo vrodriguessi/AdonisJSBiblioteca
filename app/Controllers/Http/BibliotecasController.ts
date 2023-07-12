@@ -57,5 +57,10 @@ export default class BibliotecasController {
             data: biblioteca,
         }
     }
+    public async showLivros ({params}: HttpContextContract) {
+        const biblioteca = await Biblioteca.findOrFail(params.id)
+        await biblioteca.load('livros')
     
+        return biblioteca
+      }
 }

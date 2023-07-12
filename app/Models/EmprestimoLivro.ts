@@ -7,11 +7,10 @@ export default class EmprestimoLivro extends BaseModel {
   public id: number
 
   @column()
-  public livroId: number
+  public livro_id: number
 
-  
   @column()
-  public pessoaId: number
+  public pessoa_id: number
 
   @column()
   public title: string

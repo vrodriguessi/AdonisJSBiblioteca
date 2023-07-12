@@ -34,5 +34,5 @@ Route.group(() =>{
 Route.group(() => {
   Route.post('/pessoas/:pessoaId/emprestimos', 'EmprestimoLivrosController.store')
 
-  Route.patch('/pessoas/:pessoaId/livros/:livroId/emprestimos', 'EmprestimoLivrosController.update')
+  Route.patch('/pessoas/:pessoa_id/livros/:livro_id/emprestimos', 'EmprestimoLivrosController.update')
 }).prefix('api/v1')

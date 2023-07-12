@@ -1,5 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
+import Livro from 'App/Models/Livro'
 import Biblioteca from 'App/Models/Biblioteca'
 
 export default class BibliotecasController {
@@ -63,4 +63,18 @@ export default class BibliotecasController {
     
         return biblioteca
       }
+    
+    public async transferirLivro({ params, request }: HttpContextContract) {
+        const { livro_id, novaBibliotecaId, quantidade } = request.body();
+        const livros = await Livro.query().where('id', livro_id).andWhere('library_id', params.id).limit(quantidade);
+        if (livros.length === 0) {
+          return {
+            message: 'Não há livros na biblioteca a serem transferidos.'
+          }
+        }
+        for (let livro of livros) {
+          livro.library_id = novaBibliotecaId;
+          await livro.save();
+        }
+      }      
 }

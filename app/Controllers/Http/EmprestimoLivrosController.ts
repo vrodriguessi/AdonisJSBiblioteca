@@ -5,39 +5,33 @@ import EmprestimoLivro from 'App/Models/EmprestimoLivro'
 
 export default class EmprestimoLivrosController {
   public async store({ request, response }: HttpContextContract) {
-  try {
-    const { livro_id, pessoa_id } = request.body()
-
-    const livro = await Livro.find(livro_id)
-    const pessoa = await Pessoa.find(pessoa_id)
-    if(!livro){
-      return response.badRequest('Livro não cadastrado.')
+    try {
+      const { livro_id, pessoa_id } = request.body()
+  
+      const livro = await Livro.find(livro_id)
+      const pessoa = await Pessoa.find(pessoa_id)
+      if(!livro){
+        return response.badRequest('Livro não cadastrado.')
+      }
+      if(!pessoa){
+        return response.badRequest('Usuário não cadastrado.')
+      }
+      if (livro.available_copies <= 0) {
+        return response.badRequest('O livro não está disponível para empréstimo.')
+      }
+  
+      const emprestimoLivro = await EmprestimoLivro.create({ livro_id, pessoa_id })
+  
+      livro.available_copies = livro.available_copies - 1
+  
+      await livro.save()
+  
+      return response.created(emprestimoLivro)
+    } catch (error) {
+      console.log(error.message)
+      return response.internalServerError('Erro ao criar o empréstimo de livro.')
     }
-    if(!pessoa){
-      return response.badRequest('Usuário não cadastrado.')
-    }
-    if (livro.available_copies <= 0) {
-      return response.badRequest('O livro não está disponível para empréstimo.')
-    }
-
-    pessoa.book_id = livro_id
-    await pessoa.save()
-
-    const emprestimoLivro = new EmprestimoLivro()
-    emprestimoLivro.livro_id = livro_id
-    emprestimoLivro.pessoa_id = pessoa_id
-
-    await emprestimoLivro.save()
-
-    livro.available_copies = livro.available_copies - 1
-
-    await livro.save()
-
-    return response.created(emprestimoLivro)
-  } catch (error) {
-    return response.internalServerError('Erro ao criar o empréstimo de livro.')
-  }
-}
+  }  
 
   public async update({ params, response }: HttpContextContract) {
     try {

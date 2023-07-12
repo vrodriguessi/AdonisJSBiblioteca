@@ -85,4 +85,10 @@ export default class PessoasController {
             data: pessoa,
         }
     }
+    public async showLivros ({params}: HttpContextContract) {
+        const pessoas = await Pessoa.findOrFail(params.id)
+        await pessoas.load('livros')
+    
+        return pessoas
+      }
 }

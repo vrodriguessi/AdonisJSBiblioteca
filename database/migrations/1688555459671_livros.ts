@@ -15,6 +15,11 @@ export default class extends BaseSchema {
           .unsigned()
           .references('bibliotecas.id')
           .onDelete('CASCADE')
+        table
+          .integer('pessoa_id')
+          .unsigned()
+          .references('pessoas.id')
+          .onDelete('CASCADE')
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

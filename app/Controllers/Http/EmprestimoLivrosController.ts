@@ -42,7 +42,6 @@ export default class EmprestimoLivrosController {
   public async update({ params, response }: HttpContextContract) {
     try {
       const { livro_id, pessoa_id } = params
-      console.log(params)
 
       const emprestimoDoLivro = await EmprestimoLivro.query().where('livro_id', livro_id).first()
       if(!emprestimoDoLivro){
